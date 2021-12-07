@@ -1,4 +1,5 @@
-# :computer:	Projeto New School();
+# :computer:	Projeto New School();  :brazil:
+
 - Sistema para escola com JSF, Prime Faces, Hibernate outras tecnologias.
 
 ## Tecnologias utilizadas:
