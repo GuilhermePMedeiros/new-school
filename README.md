@@ -5,5 +5,5 @@ Sistema para escola com JSF, Prime Faces, Hibernate outras tecnologias.
 - Java
 - Prime Faces 
 - Hibernate 
-- e etc;
+- e etc
 
