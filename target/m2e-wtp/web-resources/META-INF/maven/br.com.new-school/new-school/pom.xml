@@ -11,6 +11,7 @@
 		<jsf.version>2.2.13</jsf.version>
 		<compiler.version>3.6.1</compiler.version>
 		<java.version>1.8</java.version>
+		<javax.version>7.0</javax.version>
 	</properties>
 	
 	<dependencies>
@@ -36,6 +37,14 @@
 		    <artifactId>primefaces</artifactId>
 		    <version>10.0.0</version>
 		</dependency>
+        
+        <!-- Javax Dependency -->
+        <dependency>
+        	<groupId>javax</groupId>
+        	<artifactId>javaee-api</artifactId>
+        	<version>${javax.version}</version>
+        	<scope>provided</scope>
+        </dependency>
         
     </dependencies>
 
