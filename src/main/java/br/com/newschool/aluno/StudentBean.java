@@ -22,7 +22,7 @@ public class StudentBean implements ObjectBeanBase<Student> {
 	@PostConstruct
 	private void init() {
 		student = new Student();
-		
+		student.setId(0);
 	}
 	
 	@Override

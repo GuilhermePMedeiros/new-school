@@ -9,7 +9,7 @@ package br.com.newschool.core.utils.indicators;
 public enum IndSex {
 	
 	// Values
-	MALE (0, "male", 'm' ), FEMALE(1, "female", 'f');
+	MALE (0, "Masculino", 'm' ), FEMALE(1, "feminino", 'f');
 	
 	// Attributes 
 	private int indicator;

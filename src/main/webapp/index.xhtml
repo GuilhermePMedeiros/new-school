@@ -8,27 +8,44 @@
     <h:head>
     	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     	<title>Home</title>
+    	<h:outputStylesheet library="webjars" name="primeflex/2.0.0/primeflex.min.css" />
     </h:head>    
     <h:body>
 		
-		<!-- Navbar or menubar -->
-		<div class="card">
-			<h:form>
-				<p:growl id="messages"/>
+		
+		<div id="principal_layout" class="p-d-flex p-flex-column p-jc-between">
+			<!-- Top -->
+			<div id="top_page" class="p-mb-2">
 				
-				<p:menubar autoDisplay="false">
-					<p:submenu label="Aluno" icon="pi pi-fw pi-user">
-					    <p:menuitem value="Adicionar Novo" icon="pi pi-fw pi-user-plus"/>
-					    <p:divider />
-   					    <p:menuitem value="Listar Alunos" icon="pi pi-fw pi-users"/> 
-					</p:submenu>
-					
-					<p:divider layout="vertical"/>
-					
-					<p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>								
-				</p:menubar>
-			</h:form>
+				<!-- Navbar or menubar -->
+				<div class="card">
+					<h:form>
+						<p:growl id="messages"/>
+						
+						<p:menubar autoDisplay="false">
+							<p:submenu label="Aluno" icon="pi pi-fw pi-user">
+							    <p:menuitem value="Adicionar Novo" icon="pi pi-fw pi-user-plus"/>
+							    <p:divider />
+				 					    <p:menuitem value="Listar Alunos" icon="pi pi-fw pi-users"/> 
+							</p:submenu>
+							
+							<p:divider layout="vertical"/>
+							
+							<p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>								
+						</p:menubar>
+					</h:form>
+				</div>
+				
+			</div>
+			<!-- Center -->
+			<div id="center_page" class="p-mb-2">
+				
+			</div>
+			<!-- Footer -->
+			<div id="footer_page" class="p-mb-2">
+				
+			</div>
 		</div>
-
+		
     </h:body>
  </html>

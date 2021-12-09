@@ -37,7 +37,7 @@ public class ObjectBase implements Serializable {
 	// Override of the toSting method 
 	@Override
 	public String toString() {
-		return "ObjectBase [id=" + id + "]";
+		return "id: " + id;
 	}
 	
 }

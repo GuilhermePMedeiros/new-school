@@ -105,7 +105,7 @@ public class People extends ObjectBase{
 	// Override of the method toString
 	@Override
 	public String toString() {
-		return "People [ ID: " + this.getId() + ", cpf=" + cpf + ", rg=" + rg + ", name=" + name + ", dtBirth=" + dtBirth + ", sex=" + sex + "]";
+		return "id: " + this.getId() + ", cpf=" + cpf + ", rg=" + rg + ", name=" + name + ", dtBirth=" + dtBirth + ", sex=" + sex;
 	}
 	
 }
