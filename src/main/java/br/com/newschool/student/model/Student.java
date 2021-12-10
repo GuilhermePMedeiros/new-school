@@ -1,4 +1,4 @@
-package br.com.newschool.aluno;
+package br.com.newschool.student.model;
 
 import java.util.Date;
 
@@ -25,31 +25,31 @@ public class Student extends People {
 		super();
 	}
 
-	public Student(long id) {
+	public Student(int id) {
 		super(id);
 	}
 	
-	public Student(long id, String cpf) {
+	public Student(int id, String cpf) {
 		super(id, cpf);
 	}
 
-	public Student(long id, String cpf, String rg) {
+	public Student(int id, String cpf, String rg) {
 		super(id, cpf, rg);
 	}
 
-	public Student(long id, String cpf, String rg, String name) {
+	public Student(int id, String cpf, String rg, String name) {
 		super(id, cpf, rg, name);
 	}
 
-	public Student(long id, String cpf, String rg, String name, Date dtBirth) {
+	public Student(int id, String cpf, String rg, String name, Date dtBirth) {
 		super(id, cpf, rg, name, dtBirth);
 	}
 
-	public Student(long id, String cpf, String rg, String name, Date dtBirth, IndSex sex) {
+	public Student(int id, String cpf, String rg, String name, Date dtBirth, IndSex sex) {
 		super(id, cpf, rg, name, dtBirth, sex);
 	}
 	
-	public Student(long id, String cpf, String rg, String name, Date dtBirth, IndSex sex, IndDayShifts shift) {
+	public Student(int id, String cpf, String rg, String name, Date dtBirth, IndSex sex, IndDayShifts shift) {
 		super(id, cpf, rg, name, dtBirth, sex);
 		this.shift = shift;
 	}

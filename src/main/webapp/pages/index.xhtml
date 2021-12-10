@@ -31,7 +31,7 @@
 							
 							<p:divider layout="vertical"/>
 							
-							<p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>								
+							<p:menuitem value="Quit" icon="pi pi-fw pi-power-off" action="#{loginBean.logout()}"/>								
 						</p:menubar>
 					</h:form>
 				</div>
@@ -39,7 +39,7 @@
 			</div>
 			<!-- Center -->
 			<div id="center_page" class="p-mb-2">
-				
+				<h:outputText value="#{loginBean.user.login}" />
 			</div>
 			<!-- Footer -->
 			<div id="footer_page" class="p-mb-2">

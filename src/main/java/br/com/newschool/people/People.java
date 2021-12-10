@@ -22,29 +22,29 @@ public class People extends ObjectBase{
 		super();
 	}
 
-	public People(long id) {
+	public People(int id) {
 		super(id);
 	}
 	
-	public People(long id, String cpf) {
+	public People(int id, String cpf) {
 		super(id);
 		this.cpf = cpf;
 	}
 
-	public People(long id, String cpf, String rg) {
+	public People(int id, String cpf, String rg) {
 		super(id);
 		this.cpf = cpf;
 		this.rg = rg;
 	}
 
-	public People(long id, String cpf, String rg, String name) {
+	public People(int id, String cpf, String rg, String name) {
 		super(id);
 		this.cpf = cpf;
 		this.rg = rg;
 		this.name = name;
 	}
 
-	public People(long id, String cpf, String rg, String name, Date dtBirth) {
+	public People(int id, String cpf, String rg, String name, Date dtBirth) {
 		super(id);
 		this.cpf = cpf;
 		this.rg = rg;
@@ -52,7 +52,7 @@ public class People extends ObjectBase{
 		this.dtBirth = dtBirth;
 	}
 
-	public People(long id, String cpf, String rg, String name, Date dtBirth, IndSex sex) {
+	public People(int id, String cpf, String rg, String name, Date dtBirth, IndSex sex) {
 		super(id);
 		this.cpf = cpf;
 		this.rg = rg;

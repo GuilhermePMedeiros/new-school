@@ -9,7 +9,7 @@ import java.util.List;
  * */
 
 public interface ObjectBeanBase<T> {
-
+	
 	// Get Method to Objects List
 	public List<T> getObjectList();
 	// Add Method to Object

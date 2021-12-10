@@ -8,7 +8,7 @@
     <h:head>
     	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     	<title>  
-    		#{StudentBean.student.id le 0  ? 'Novo Estudante' : 'Editar Estudante'}  	
+    		#{studentFormBean.student.id le 0 ? 'Novo Estudante' : 'Editar Estudante'}  
     	</title>
     	<h:outputStylesheet library="webjars" name="primeflex/2.0.0/primeflex.min.css" />
     </h:head>    
@@ -20,17 +20,19 @@
 		<div id="principal_layout" class="p-d-flex p-flex-column p-jc-between p-ai-center">
 			<!-- Top -->
 			<div id="top_page" class="p-mr-2" style="width: 100%">
-				
+							
 				<!-- Navbar or menubar -->
 				<div class="card">
+					
 					<h:form>
 						<p:growl id="messages"/>
 						
 						<p:menubar autoDisplay="false">
+							
 							<p:submenu label="Aluno" icon="pi pi-fw pi-user">
-							    <p:menuitem value="Adicionar Novo" icon="pi pi-fw pi-user-plus"/>
+								<p:menuitem value="Adicionar Novo" icon="pi pi-fw pi-user-plus"/>
 							    <p:divider />
-				 					    <p:menuitem value="Listar Alunos" icon="pi pi-fw pi-users"/> 
+				 				<p:menuitem value="Listar Alunos" icon="pi pi-fw pi-users"/> 
 							</p:submenu>
 							
 							<p:divider layout="vertical"/>
@@ -46,7 +48,7 @@
 				<!-- Left Page Center -->
 				<div id="left_center_page" class="card p-mb-2 p-mr-2 p-shadow-4" style="width: 25%; background-color: white; padding: 25px;">
 			        <div class="card">
-			           	<p:graphicImage  value="../../resources/images/user.png" style="width: 316px; height:316px;" />
+			           	<p:graphicImage value="../../resources/images/user.png" style="width: 316px; height:316px;" />
 			        </div>
 				</div>
 				<!-- Right Page Center -->

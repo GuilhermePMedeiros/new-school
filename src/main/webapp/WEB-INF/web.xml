@@ -3,7 +3,7 @@
 	<display-name>new-school</display-name>
 	<!-- setting first page index -->
 	<welcome-file-list>
-		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>pages/login/login.xhtml</welcome-file>
 	</welcome-file-list	>
 	
 	<!-- servlet do JSF Faces-->
