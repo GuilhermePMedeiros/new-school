@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"    
+    xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+    	<ui:composition>    		
+    			<h:form>
+    				<div class="card">	
+						<p:growl id="messages"/>
+						
+						<p:menubar autoDisplay="true">
+							<!-- Option Home -->							
+							<p:menuitem value="Home" icon="pi pi-fw pi-home" action="home"/>
+							<!-- divider -->
+							<p:divider layout="vertical"/>
+							<!-- Option Student -->
+							<p:submenu label="Aluno" icon="pi pi-fw pi-user">
+							    <p:menuitem value="Adicionar novo aluno(a)" icon="pi pi-fw pi-user-plus" action="studentForm"/>
+				 				<p:menuitem value="Listar alunos(as)" icon="pi pi-fw pi-users" disabled="true"/> 
+							</p:submenu>
+							<!-- Option Teacher -->
+							<p:submenu label="Professor" icon="pi pi-fw pi-user" disabled="true">
+							    <p:menuitem value="Adicionar novo professor(a)" icon="pi pi-fw pi-user-plus"/>
+				 				<p:menuitem value="Listar professores(as)" icon="pi pi-fw pi-users"/> 
+							</p:submenu>
+							<!-- Option Class -->
+							<p:submenu label="Turma" icon="pi pi-fw pi-id-card" disabled="true">
+							    <p:menuitem value="Criar nova turma" icon="pi pi-fw pi-plus-circle"/>
+				 				<p:menuitem value="Listar turmas" icon="pi pi-fw pi-list"/> 
+							</p:submenu>
+							
+							<!-- divider -->
+							<p:divider layout="vertical"/>
+							<!-- Option Quit -->
+							<p:menuitem value="Quit" icon="pi pi-fw pi-power-off" action="#{loginBean.logout()}"/>								
+						</p:menubar>
+					</div>
+				</h:form>
+    	</ui:composition>
+    </h:body>    
+</html>

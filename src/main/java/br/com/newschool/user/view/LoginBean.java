@@ -46,12 +46,12 @@ public class LoginBean implements Serializable {
 		this.user = user;
 	}
 	
-	// Login Method
+	// Login Method TODO
 	public String login() {
 		//
 		if (name.equals("adm") && password.equals("123")) {
 			user = new User();
-			return "/pages/index.xhtml?faces-redirect=true";
+			return "home";
 		}
 		//
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -65,7 +65,7 @@ public class LoginBean implements Serializable {
 	public String logout() {
 		// Delete session object
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		return "/pages/login/login.xhtml?faces-redirect=true";
+		return "login";
 	}
 	
 }

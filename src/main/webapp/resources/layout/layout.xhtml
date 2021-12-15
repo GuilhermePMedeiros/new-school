@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"    
+    xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+    	<ui:insert name="header">
+			<ui:include src="../../components/header/header.xhtml" />
+		</ui:insert> 	
+    </h:head>
+        
+    <h:body  style="background-color: #F7A156;">
+		
+		<div id="principal_layout" class="p-d-flex p-flex-column p-jc-between" style="width: 100%;">
+			<!-- Top -->
+			<div id="top_page" class="p-mb-2">
+				<!-- Navbar or menubar component -->
+				<ui:insert name="header">
+					<ui:include src="../../components/menubar/menubar.xhtml" />
+				</ui:insert>
+			</div>
+			<!-- Center -->
+			<div id="center_page" class="p-mb-2">
+				<!-- Content component -->	
+				<ui:insert name="content"/>
+			</div>
+			<!-- Footer -->
+			<div id="footer_page" class="p-mb-2">
+				<!-- footer component -->
+				<ui:insert name="footer">
+					<ui:include src="../../components/footer/footer.xhtml" />
+				</ui:insert>
+			</div>
+		</div>
+    </h:body>
+ </html>

@@ -29,4 +29,20 @@
 		<param-value>true</param-value>
 	</context-param>
 	
+	<!-- Login Filter -->
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>br.com.newschool.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/restricted/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- Image logo context param -->
+	<context-param>
+		<param-name>logo.location</param-name>
+		<param-value>../../resources/images/school_icon.png</param-value>
+	</context-param>
+	
 </web-app>

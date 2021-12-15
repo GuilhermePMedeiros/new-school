@@ -10,15 +10,15 @@
     	<title>Login</title>
     	<h:outputStylesheet library="webjars" name="primeflex/2.0.0/primeflex.min.css" />
     </h:head>    
-    <h:body style="background-color: #ADD8E6;">
+    <h:body style="background-color: #F7A156;">
 		
 		<div id="principal_layout" class="p-d-flex p-jc-center" style="width: 100%;">
-			<div id="login_card" class="p-mr-2  p-shadow-4"  style="background:white; padding: 25px; width: 18%;">
+			<div id="login_card" class="p-mr-2  p-shadow-4"  style="background:white; padding: 25px; width: 20%;">
 				
 				<h:form>
 					<div class="ui-fluid p-formgrid p-grid">
 						<div class="p-field p-col-12">
-					    	<p:graphicImage value="../../resources/images/school_icon.png" style="width: 250px; height:250px;"/>
+					    	<p:graphicImage value="#{facesContext.externalContext.getInitParameter('logo.location')}" style="width: 250px; height:250px;"/>
 					    	<h1>Usuário</h1>
 					    </div>
 					    <div class="p-field p-col-12">

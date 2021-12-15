@@ -5,93 +5,49 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"    
     xmlns:p="http://primefaces.org/ui">
-    <h:head>
-    	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    	<title>  
-    		#{studentFormBean.student.id le 0 ? 'Novo Estudante' : 'Editar Estudante'}  
-    	</title>
-    	<h:outputStylesheet library="webjars" name="primeflex/2.0.0/primeflex.min.css" />
-    </h:head>    
-    <h:body style="background-color: #ADD8E6;">
-		<!-- Import IndSex Enum -->
-		<p:importEnum type="br.com.newschool.core.utils.indicators.IndSex"
-                  var="indSexEnum" allSuffix="ALL_ENUM_VALUES"/>
-		
-		<div id="principal_layout" class="p-d-flex p-flex-column p-jc-between p-ai-center">
-			<!-- Top -->
-			<div id="top_page" class="p-mr-2" style="width: 100%">
-							
-				<!-- Navbar or menubar -->
-				<div class="card">
-					
-					<h:form>
-						<p:growl id="messages"/>
-						
-						<p:menubar autoDisplay="false">
-							
-							<p:submenu label="Aluno" icon="pi pi-fw pi-user">
-								<p:menuitem value="Adicionar Novo" icon="pi pi-fw pi-user-plus"/>
-							    <p:divider />
-				 				<p:menuitem value="Listar Alunos" icon="pi pi-fw pi-users"/> 
-							</p:submenu>
-							
-							<p:divider layout="vertical"/>
-							
-							<p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>								
-						</p:menubar>
-					</h:form>
-				</div>
-				
-			</div>
-			<!-- Center -->
-			<div id="center_page" class="p-d-flex  p-mr-2 p-ai-center" style="width: 90%;" >
-				<!-- Left Page Center -->
-				<div id="left_center_page" class="card p-mb-2 p-mr-2 p-shadow-4" style="width: 25%; background-color: white; padding: 25px;">
-			        <div class="card">
-			           	<p:graphicImage value="../../resources/images/user.png" style="width: 316px; height:316px;" />
-			        </div>
-				</div>
-				<!-- Right Page Center -->
-				
-				<div id="rigth_center_page" class="p-d-flex p-mb-2 p-mr-2 p-shadow-4" style="width: 75%; background-color: white; padding: 25px;">
-				
-					<h:form id="student_form">
-						<div class="ui-fluid p-formgrid p-grid">
-						    <div class="p-field p-col-12 p-md-6">
-						        <label for="student_cpf">CPF</label>
-						        <p:inputText id="student_cpf" type="text" />
-						    </div>
-						    <div class="p-field p-col-12 p-md-6">
-						        <label for="student_rg">RG</label>
-						        <p:inputText id="student_rg" type="text" />
-						    </div>
-						    <div class="p-field p-col-12">
-						        <label for="student_name">Nome</label>
-						        <p:inputText id="student_name" type="text" required="true" requiredMessage="Campo obrigatorio!"/>
-						    </div>
-						    <div class="p-field p-col-12 p-md-6">
-						        <label for="student_dtbirth">Data de nascimento</label>
-						        <p:inputText id="student_dtbirth" type="date" />
-						    </div>
-						    <div class="p-field p-col-12 p-md-6">
-						        <label for="student_indsex">Sexo</label>
-						        <p:selectOneMenu id="student_indsex">
-						            <f:selectItem itemLabel="Selecione o sexo" itemValue=""/>
-	                    			<f:selectItems value="#{indSexEnum.ALL_ENUM_VALUES}"/>
-						        </p:selectOneMenu>
-						    </div>
-						    <div class="p-field p-col-12">
-								<p:commandButton id="btnform_save" type="button" value="Salvar"/>
-							</div>
+    
+   	<ui:composition template="../../resources/layout/layout.xhtml">
+		<!-- Content Component -->
+		<ui:define name="content">
+			<!-- Import IndSex Enum -->
+			<p:importEnum type="br.com.newschool.core.utils.indicators.IndSex"
+                 	var="indSexEnum" allSuffix="ALL_ENUM_VALUES"/>
+			<!-- Center page -->
+			<div id="center_page" class="p-mb-2 p-mr-2 p-shadow-4" style="width: 70%; background-color: white; padding: 25px;">
+				<h:form id="student_form">
+					<div class="ui-fluid p-formgrid p-grid">
+					    <div class="p-field p-col-12 p-md-6">
+					        <label for="student_cpf">CPF</label>
+					        <p:inputMask id="student_cpf" value="#{studentFormBean.student.cpf}" mask="999.999.999-99"/>
+					    </div>
+					    <div class="p-field p-col-12 p-md-6">
+					        <label for="student_rg">RG</label>
+					        <p:inputMask id="student_rg" value="#{studentFormBean.student.rg}" mask="999.999.999"/>
+					    </div>
+					    <div class="p-field p-col-12">
+					        <label for="student_name">Nome</label>
+					        <p:inputText id="student_name" type="text" required="true" requiredMessage="Campo obrigatorio!"/>
+					    </div>
+					    <div class="p-field p-col-12 p-md-6">
+					        <label for="student_dtbirth">Data de nascimento</label>
+					        <p:inputText id="student_dtbirth" type="date" />
+					    </div>
+					    <div class="p-field p-col-12 p-md-6">
+					        <label for="student_indsex">Sexo</label>
+					        <p:selectOneMenu id="student_indsex">
+					            <f:selectItem itemLabel="Selecione o sexo" itemValue=""/>
+                    			<ui:repeat value="#{indSexEnum.ALL_ENUM_VALUES}" var="sexEnum">
+                    				<f:selectItem itemLabel="#{sexEnum.description}" itemValue="#{sexEnum.description}"/>
+                    			</ui:repeat>                    	
+					        </p:selectOneMenu>
+					    </div>
+					    <div class="p-field p-col-12">
+							<p:commandButton id="btnform_save" type="button" value="Salvar"/>
 						</div>
-					</h:form>
-				</div>		
+					</div>
+				</h:form>
 			</div>
-			<!-- Footer -->
-			<div id="footer_page" class="p-mr-2">
-				
-			</div>
-		</div>
-		
-    </h:body>
+		</ui:define>
+	</ui:composition>		
+   
  </html>
