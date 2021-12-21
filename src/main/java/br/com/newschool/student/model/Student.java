@@ -12,7 +12,7 @@ import br.com.newschool.utils.indicators.IndDayShifts;
  * Date: 07/12/2021
  * */
 
-public class Student extends People {
+public class Student extends People{
 
 	// Serial ID
 	private static final long serialVersionUID = 2333213907462020932L;
@@ -67,6 +67,32 @@ public class Student extends People {
 	@Override
 	public String toString() {
 		return "...";
+	}
+	
+	//Clone Method
+	@Override
+	public Student clone() throws CloneNotSupportedException {
+		return new Student (getId(), getCpf(), getRg(), getName(), getDtBirth(), getSex(), getShift());
+	}
+	
+	// Override of the method toString
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Student other = (Student) obj;
+		if (this.getCpf() == null) {
+			return other.getCpf() == null;
+		} else {
+			return this.getCpf().equals(other.getCpf());
+		}
 	}
 	
 }

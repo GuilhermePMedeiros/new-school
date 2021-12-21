@@ -5,6 +5,13 @@ import java.util.Date;
 import br.com.newschool.core.base.ObjectBase;
 import br.com.newschool.core.utils.indicators.IndSex;
 
+/**
+ * @author guilherme.pacheco
+ * @version 1.0
+ * Date: 07/12/2021
+ * */
+
+
 public class People extends ObjectBase{
 	
 	// Serial ID
@@ -107,5 +114,6 @@ public class People extends ObjectBase{
 	public String toString() {
 		return "id: " + this.getId() + ", cpf=" + cpf + ", rg=" + rg + ", name=" + name + ", dtBirth=" + dtBirth + ", sex=" + sex;
 	}
+	
 	
 }

@@ -2,7 +2,6 @@ package br.com.newschool.filter;
 
 import java.io.IOException;
 
-import javax.faces.bean.ManagedProperty;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -11,8 +10,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import br.com.newschool.user.view.LoginBean;
 
 public class LoginFilter implements Filter {
 

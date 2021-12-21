@@ -15,10 +15,18 @@ public enum IndDayShifts {
 	private int indicator;
 	private String description;
 	
+	// Gets
+	public int getIndicator() {
+		return indicator;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+	
 	// Build
 	private IndDayShifts(int indicator, String description) {
 		this.indicator = indicator;
 		this.description = description;
 	}
-	
 }

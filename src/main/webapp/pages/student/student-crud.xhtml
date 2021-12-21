@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../../resources/layout/layout.xhtml">
+	<!-- Metadata Component -->
+	<ui:define name="metadata">
+
+	</ui:define>
+	<!-- Header Component -->
+	<ui:define name="header">
+		<title>Lista de alunos</title>
+	</ui:define>
+	<!-- Content Component -->
+	<ui:define name="content">
+		<div style="align-items: center;">
+			<!-- Form -->
+			<h:form id="form">
+				<!-- Import IndSex Enum -->
+				<p:importEnum type="br.com.newschool.core.utils.indicators.IndSex"
+					var="indSexEnum" allSuffix="ALL_ENUM_VALUES" />
+				<div class="card" style="width: 100%;">
+					<p:growl id="messages" showDetail="false" />
+					<!-- toolbar -->
+					<p:toolbar style="margin-bottom: 5px;">
+						<!-- toolbar Group to crud buttons-->
+						<p:toolbarGroup>
+							<!-- Button to create new Student -->
+							<p:commandButton value="Novo Aluno" icon="pi pi-plus"
+								actionListener="#{studentBean.openNewStudent()}"
+								update=":form:manage-student-dialog"
+								oncomplete="PF('manageStudentDialog').show()"
+								styleClass="ui-button-success" style="margin-right: .5rem">
+								<p:resetInput target=":form:manage-student-content" />
+							</p:commandButton>
+							<!-- Button to delete or remove all selected Students -->
+							<p:commandButton id="delete-students-button"
+								value="#{studentBean.deleteButtonMessage}" icon="pi pi-trash"
+								actionListener="#{studentBean.deleteSelectedStudentsList()}"
+								styleClass="ui-button-danger"
+								disabled="#{!studentBean.hasSelectedStudentsList()}"
+								update="@this">
+								<p:confirm header="Confirmação"
+									message="Deseja apagar os alunos selecionados?"
+									icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+						</p:toolbarGroup>
+						<!-- toolbar Group -->
+						<p:toolbarGroup align="right">
+							<!-- Button to export table to pdf -->
+							<p:commandButton value="Export" icon="pi pi-upload"
+								styleClass="ui-button-help" ajax="false">
+								<p:dataExporter type="pdf" target="dt-students"
+									fileName="students" />
+							</p:commandButton>
+						</p:toolbarGroup>
+
+					</p:toolbar>
+
+					<!-- Students Data Table -->
+					<p:dataTable id="dt-students" widgetVar="dtStudents" var="student"
+						value="#{studentBean.studentsList.objectsList}" reflow="true"
+						selection="#{studentBean.selectedStudentsList}"
+						rowKey="#{student.id}" paginator="true" rows="10"
+						rowSelectMode="add" paginatorPosition="bottom">
+
+						<!-- table header -->
+						<f:facet name="header">
+							<div>
+								<span style="font-weight: bold">Alunos</span> <span
+									class="filter-container ui-input-icon-left"> <i
+									class="pi pi-search"></i> <p:inputText id="globalFilter"
+										onkeyup="PF('dtStudents').filter()" placeholder="Search" />
+								</span>
+
+							</div>
+						</f:facet>
+
+						<!-- Events AJAX-->
+						<p:ajax event="rowSelect" update=":form:delete-students-button" />
+						<p:ajax event="rowUnselect" update=":form:delete-students-button" />
+						<p:ajax event="rowSelectCheckbox"
+							update=":form:delete-students-button" />
+						<p:ajax event="rowUnselectCheckbox"
+							update=":form:delete-students-button" />
+						<p:ajax event="toggleSelect" update=":form:delete-students-button" />
+
+						<!-- Columns -->
+						<p:column selectionMode="multiple" exportable="false"></p:column>
+						<!-- Student ID column -->
+						<p:column headerText="ID" sortBy="#{student.id}"
+							filterBy="#{student.id}">
+							<h:outputText value="#{student.id}" />
+						</p:column>
+						<!-- Student name column -->
+						<p:column headerText="Nome" sortBy="#{student.name}"
+							filterBy="#{student.name}">
+							<h:outputText value="#{student.name}" />
+						</p:column>
+						<!-- Student CPF column -->
+						<p:column headerText="CPF" sortBy="#{student.cpf}"
+							filterBy="#{student.cpf}">
+							<h:outputText value="#{student.cpf}" />
+						</p:column>
+						<!-- Student RG column -->
+						<p:column headerText="RG" sortBy="#{student.rg}"
+							filterBy="#{student.rg}">
+							<h:outputText value="#{student.rg}" />
+						</p:column>
+
+						<!-- Student Birth Day column -->
+						<p:column headerText="Data Nascimento"
+							sortBy="#{student.dtBirth.year}"
+							filterBy="#{student.dtBirth.year}">
+							<h:outputText value="#{student.dtBirth.toGMTString()}" />
+						</p:column>
+
+						<!-- Student Sex column -->
+						<p:column headerText="Sexo" sortBy="#{student.sex.description}"
+							filterBy="#{student.sex.description}">
+							<h:outputText value="#{student.sex.description}" />
+						</p:column>
+
+						<!-- buttons crud column -->
+						<p:column exportable="false">
+							<!-- Edit button -->
+							<p:commandButton icon="pi pi-pencil"
+								update=":form:manage-student-content"
+								oncomplete="PF('manageStudentDialog').show()"
+								styleClass="edit-button rounded-button ui-button-success"
+								process="@this">
+								<f:setPropertyActionListener value="#{student}"
+									target="#{studentBean.selectedCurrentStudent}" />
+								<p:resetInput target=":form:manage-student-content" />
+							</p:commandButton>
+							<!-- remove button -->
+							<p:commandButton class="ui-button-warning rounded-button"
+								icon="pi pi-trash" process="@this"
+								oncomplete="PF('deleteStudentDialog').show()">
+								<f:setPropertyActionListener value="#{student}"
+									target="#{studentBean.selectedCurrentStudent}" />
+							</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+
+					<!-- Student's dialog manage -->
+					<p:dialog id="manage-student-dialog" header="Descrição do Aluno"
+						showEffect="fade" modal="true" widgetVar="manageStudentDialog"
+						responsive="true">
+
+						<!-- Output panel manage student content  -->
+						<p:outputPanel id="manage-student-content" class="ui-fluid">
+
+							<p:outputPanel
+								rendered="#{not empty studentBean.selectedCurrentStudent}">
+
+								<div class="p-formgrid p-grid">
+									<!-- CPF Field -->
+									<div class="p-field p-col">
+										<p:outputLabel for="student_cpf">CPF</p:outputLabel>
+										<p:inputMask id="student_cpf"
+											value="#{studentBean.selectedCurrentStudent.cpf}"
+											mask="999.999.999-99" required="true" />
+									</div>
+									<!-- RG Field -->
+									<div class="p-field p-col">
+										<p:outputLabel for="student_rg">RG</p:outputLabel>
+										<p:inputMask id="student_rg"
+											value="#{studentBean.selectedCurrentStudent.rg}"
+											mask="999.999.999" required="true" />
+									</div>
+								</div>
+
+								<!-- Name Field -->
+								<div class="p-field">
+									<p:outputLabel for="student_name">Nome</p:outputLabel>
+									<p:inputText id="student_name"
+										value="#{studentBean.selectedCurrentStudent.name}"
+										required="true" />
+								</div>
+
+								<div class="p-formgrid p-grid">
+
+									<!-- Birth day Field -->
+									<div class="p-field p-col">
+										<p:outputLabel for="student_dtbirth">Data de Nascimento</p:outputLabel>
+										<p:datePicker id="student_dtbirth"
+											value="#{studentBean.selectedCurrentStudent.dtBirth}" />
+									</div>
+
+									<!-- IndSex Field -->
+									<div class="p-field p-col">
+										<p:outputLabel for="student_indsex">Sexo</p:outputLabel>
+										<p:selectOneMenu id="student_indsex" value="#{studentBean.selectedCurrentStudent.sex}">
+											<f:selectItem itemLabel="Selecione o sexo" />
+											<f:selectItems value="#{indSexEnum.ALL_ENUM_VALUES}"
+												var="SexEnum" itemValue="#{SexEnum}" itemLabel="#{SexEnum.description}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+
+							</p:outputPanel>
+
+						</p:outputPanel>
+
+						<!-- Footer with crud buttons -->
+						<f:facet name="footer">
+
+							<!-- Save or update button -->
+							<p:commandButton
+								value='#{studentBean.selectedCurrentStudent.id eq 0 ? "Salvar" : "Alterar" }'
+								icon="pi pi-check" actionListener="#{studentBean.saveStudent()}"
+								update=":form:manage-student-content :form:manage-student-dialog"
+								onsuccess=":form:manage-student-content"
+								process="manage-student-content @this" />
+
+							<!-- Cancel button -->
+							<p:commandButton value="Cancelar" icon="pi pi-times"
+								onclick="PF('manageStudentDialog').hide()"
+								class="ui-button-secondary" />
+						</f:facet>
+					</p:dialog>
+
+					<!-- Confirm dialog to delete or remove selected current student -->
+					<p:confirmDialog widgetVar="deleteStudentDialog" showEffect="fade"
+						width="300" message="Você deseja apagar este aluno?"
+						header="Confirmação" severity="warn">
+						<p:commandButton value="Sim" icon="pi pi-check"
+							actionListener="#{studentBean.deleteStudent()}" process="@this"
+							oncomplete="PF('deleteStudentDialog').hide()" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-button-secondary" icon="pi pi-times"
+							onclick="PF('deleteStudentDialog').hide()" />
+					</p:confirmDialog>
+
+					<!-- Confirm dialog to delete all selected students -->
+					<p:confirmDialog global="true" showEffect="fade" width="300">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no ui-button-secondary"
+							icon="pi pi-times" />
+					</p:confirmDialog>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

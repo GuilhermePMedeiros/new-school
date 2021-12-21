@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"    
+    xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    	<title>Login</title>
+    	<h:outputStylesheet library="webjars" name="primeflex/2.0.0/primeflex.min.css" />
+    </h:head>    
+    <h:body style="background-color: #F7A156;">
+		
+		<div id="principal_layout" class="p-d-flex p-jc-center" style="width: 100%;">
+			<div id="login_card" class="p-mr-2  p-shadow-4"  style="background:white; padding: 25px; width: 20%;">
+				
+				<h:form>
+					<div class="ui-fluid p-formgrid p-grid">
+						<div class="p-field p-col-12">
+					    	<p:graphicImage value="#{facesContext.externalContext.getInitParameter('logo.location')}" style="width: 250px; height:250px;"/>
+					    	<h1>Usuário</h1>
+					    </div>
+					    <div class="p-field p-col-12">
+					    	<p:messages autoUpdate="true"/>
+					    </div>
+						<div class="p-field p-col-12">
+					        <label for="name">Login</label>
+					        <p:inputText value="#{loginBean.name}" type="text" />
+					    </div>
+					    <div class="p-field p-col-12">
+					        <label for="password">Senha</label>
+					        <p:inputText value="#{loginBean.password}" type="password" />
+					    </div>
+					    <div class="p-field p-col-12">
+					    	<p:commandButton id="btn_login" ajax="false" action="#{loginBean.login}" value="Acessar"/>
+						</div>      
+					</div>
+				</h:form>
+				
+			</div>			
+		</div>
+			
+    </h:body>
+</html>

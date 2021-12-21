@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Date: 07/12/2021
  * */
 
-public class ObjectBase implements Serializable {
+public class ObjectBase implements Serializable, Cloneable {
 	
 	// Serial ID
 	private static final long serialVersionUID = -6064377065615869946L;
@@ -26,7 +26,7 @@ public class ObjectBase implements Serializable {
 	}
 
 	// Gets and Sets
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -40,4 +40,9 @@ public class ObjectBase implements Serializable {
 		return "id: " + id;
 	}
 	
+	// Clone
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 }

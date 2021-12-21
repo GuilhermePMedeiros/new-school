@@ -10,10 +10,13 @@ public interface ObjectMapperBase <T> {
 
 	// Add Object Method
 	public void addObject(T t);
-	// Find Object Method by id 
+
+	// Find Object Method by id
 	public T findObjectById(long id);
+
 	// Update Object Method by id
 	public void UpdateObjectById(long id, T t);
+
 	// Remove Object Method by id
 	public void removeObjectById(long id);
 	

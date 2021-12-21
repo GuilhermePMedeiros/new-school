@@ -1,0 +1,11 @@
+br\com\newschool\core\base\ObjectBeanBase.class
+br\com\newschool\core\utils\indicators\IndSex.class
+br\com\newschool\utils\indicators\IndDayShifts.class
+br\com\newschool\people\People.class
+br\com\newschool\student\view\StudentBean.class
+br\com\newschool\filter\LoginFilter.class
+br\com\newschool\user\model\User.class
+br\com\newschool\core\base\ObjectBase.class
+br\com\newschool\student\model\Student.class
+br\com\newschool\core\base\ObjectMapperBase.class
+br\com\newschool\user\view\LoginBean.class

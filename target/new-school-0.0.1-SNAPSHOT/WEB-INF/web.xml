@@ -3,7 +3,7 @@
 	<display-name>new-school</display-name>
 	<!-- setting first page index -->
 	<welcome-file-list>
-		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>pages/login/login.xhtml</welcome-file>
 	</welcome-file-list	>
 	
 	<!-- servlet do JSF Faces-->
@@ -27,6 +27,22 @@
 	<context-param>
 		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
 		<param-value>true</param-value>
+	</context-param>
+	
+	<!-- Login Filter -->
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>br.com.newschool.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/restricted/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- Image logo context param -->
+	<context-param>
+		<param-name>logo.location</param-name>
+		<param-value>../../resources/images/school_icon.png</param-value>
 	</context-param>
 	
 </web-app>
