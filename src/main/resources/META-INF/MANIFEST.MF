@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path:
+Dependencies: org.hibernate.ogm services, org.hibernate.ogm.mongodb:main services
+ 
+

@@ -9,19 +9,25 @@
 			<from-view-id>/*</from-view-id>
 			<navigation-case>
 			    <from-outcome>login</from-outcome>
-			    <to-view-id>./pages/login/login.xhtml</to-view-id>
+			    <to-view-id>/./pages/login/login.xhtml</to-view-id>
 			    <redirect/>
 		 	</navigation-case>
 			<navigation-case>
 			    <from-outcome>home</from-outcome>
-			    <to-view-id>./restricted/dashboard.xhtml</to-view-id>
+			    <to-view-id>/./restricted/dashboard.xhtml</to-view-id>
 			    <redirect/>
 		 	</navigation-case>
 		 	<navigation-case>
 		    	<from-outcome>studentCrud</from-outcome>
-		    	<to-view-id>./pages/student/student-crud.xhtml</to-view-id>
+		    	<to-view-id>/./pages/student/student-crud.xhtml</to-view-id>
 		    	<redirect/>
 		 	</navigation-case>
+		 	<navigation-case>
+		    	<from-outcome>employeeCrud</from-outcome>
+		    	<to-view-id>/./pages/employee/employee-crud.xhtml</to-view-id>
+		    	<redirect/>
+		 	</navigation-case>
+		 	
 		 	<!-- 
 			<navigation-case>
 				<from-outcome></from-outcome>

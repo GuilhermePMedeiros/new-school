@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../../resources/layout/layout.xhtml">
+	<!-- Metadata Component -->
+	<ui:define name="metadata">
+
+	</ui:define>
+	<!-- Header Component -->
+	<ui:define name="header">
+		<title>Lista de funcionários(as)</title>
+	</ui:define>
+	<!-- Content Component -->
+	<ui:define name="content">
+		<div>
+			<!-- Form -->
+			<h:form id="form">
+				<!-- Import Enums -->
+				<!-- Import IndSex Enum -->
+				<p:importEnum type="br.com.newschool.core.utils.indicators.IndSex"
+					var="indSexEnum" allSuffix="ALL_ENUM_VALUES" />
+				<!-- Import IndTypeLogradouro Enum -->
+				<p:importEnum
+					type="br.com.newschool.core.utils.indicators.IndTypeLogradouro"
+					var="indTypeLogradouroEnum" allSuffix="ALL_ENUM_VALUES" />
+				<!-- Import IndUF Enum -->
+				<p:importEnum type="br.com.newschool.core.utils.indicators.IndUF"
+					var="indUFEnum" allSuffix="ALL_ENUM_VALUES" />
+				<!-- Import Ind D Enum -->
+				<p:importEnum
+					type="br.com.newschool.utils.indicators.IndDepartment"
+					var="indDepartmentEnum" allSuffix="ALL_ENUM_VALUES" />
+				<!-- P-Grid -->
+				<div class="p-grid" style="padding: 10px;">
+					<!-- Growl Massage -->
+					<p:growl id="messages" showDetail="false" />
+					<!-- toolbar -->
+					<div class="p-col-12">
+						<p:toolbar style="margin-bottom: 5px;">
+							<!-- toolbar Group to crud buttons-->
+							<p:toolbarGroup>
+								<!-- Button to create new Employee -->
+								<p:commandButton value="Novo Funcionário" icon="pi pi-plus"
+									actionListener="#{employeeBean.openNewEmployee()}"
+									update=":form:manage-employee-dialog"
+									oncomplete="PF('manageEmployeeDialog').show()"
+									styleClass="ui-button-success" style="margin-right: .5rem">
+									<p:resetInput target=":form:manage-employee-content" />
+								</p:commandButton>
+								<!-- Button to delete or remove all selected Employees -->
+								<p:commandButton id="delete-employees-button"
+									value="#{employeeBean.deleteButtonMessage}" icon="pi pi-trash"
+									actionListener="#{employeeBean.deleteSelectedEmployeesList()}"
+									styleClass="ui-button-danger"
+									disabled="#{!employeeBean.hasSelectedEmployeesList()}"
+									update="@this">
+									<p:confirm header="Confirmação"
+										message="Deseja apagar os Funcionários(as) selecionados?"
+										icon="pi pi-exclamation-triangle" />
+								</p:commandButton>
+							</p:toolbarGroup>
+							<!-- toolbar Group -->
+							<p:toolbarGroup align="right">
+								<!-- Button to export table to pdf -->
+								<p:commandButton value="Export" icon="pi pi-upload"
+									styleClass="ui-button-help" ajax="false">
+									<p:dataExporter type="pdf" target="dt-employees"
+										fileName="employees" />
+								</p:commandButton>
+							</p:toolbarGroup>
+
+						</p:toolbar>
+					</div>
+					<div class="p-col-12">
+						<!-- Employees Data Table -->
+						<p:dataTable id="dt-employees" widgetVar="dtEmployees"
+							var="employee" value="#{employeeBean.employeesList.objectsList}"
+							reflow="true" selection="#{employeeBean.selectedEmployeesList}"
+							rowKey="#{employee.id}" paginator="true" rows="10"
+							rowSelectMode="add" paginatorPosition="bottom">
+
+							<!-- table header -->
+							<f:facet name="header">
+								<div>
+									<span style="font-weight: bold">Funcionários(as)</span> <span
+										class="filter-container ui-input-icon-left"> <i
+										class="pi pi-search"></i> <p:inputText id="globalFilter"
+											onkeyup="PF('dtEmployees').filter()" placeholder="Search" />
+									</span>
+
+								</div>
+							</f:facet>
+
+							<!-- Events AJAX-->
+							<p:ajax event="rowSelect" update=":form:delete-employees-button" />
+							<p:ajax event="rowUnselect"
+								update=":form:delete-employees-button" />
+							<p:ajax event="rowSelectCheckbox"
+								update=":form:delete-employees-button" />
+							<p:ajax event="rowUnselectCheckbox"
+								update=":form:delete-employees-button" />
+							<p:ajax event="toggleSelect"
+								update=":form:delete-employees-button" />
+
+							<!-- Columns -->
+							<p:column selectionMode="multiple" exportable="false"></p:column>
+							<!-- Employee ID column -->
+							<p:column headerText="ID" sortBy="#{employee.id}"
+								filterBy="#{employee.id}">
+								<h:outputText value="#{employee.id}" />
+							</p:column>
+							<!-- Employee name column -->
+							<p:column headerText="Nome" sortBy="#{employee.name}"
+								filterBy="#{employee.name}">
+								<h:outputText value="#{employee.name}" />
+							</p:column>
+							<!-- Employee CPF column -->
+							<p:column headerText="CPF" sortBy="#{employee.cpf}"
+								filterBy="#{employee.cpf}">
+								<h:outputText value="#{employee.cpf}" />
+							</p:column>
+							<!-- Employee RG column -->
+							<p:column headerText="RG" sortBy="#{employee.rg}"
+								filterBy="#{employee.rg}">
+								<h:outputText value="#{employee.rg}" />
+							</p:column>
+
+							<!-- Employee Birth Day column -->
+							<p:column headerText="Data Nascimento"
+								sortBy="#{employee.formatedDtBirth}"
+								filterBy="#{employee.formatedDtBirth}">
+								<h:outputText value="#{employee.formatedDtBirth}" />
+							</p:column>
+
+							<!-- Employee Sex column -->
+							<p:column headerText="Sexo" sortBy="#{employee.sex.description}"
+								filterBy="#{employee.sex.description}">
+								<h:outputText value="#{employee.sex.description}" />
+							</p:column>
+
+							<!-- buttons crud column -->
+							<p:column exportable="false">
+								<!-- Edit button -->
+								<p:commandButton icon="pi pi-pencil"
+									update=":form:manage-employee-content"
+									oncomplete="PF('manageEmployeeDialog').show()"
+									styleClass="edit-button rounded-button ui-button-success"
+									process="@this">
+									<f:setPropertyActionListener value="#{employee}"
+										target="#{employeeBean.selectedCurrentEmployee}" />
+									<p:resetInput target=":form:manage-employee-content" />
+								</p:commandButton>
+								<!-- remove button -->
+								<p:commandButton class="ui-button-warning rounded-button"
+									icon="pi pi-trash" process="@this"
+									oncomplete="PF('deleteEmployeeDialog').show()">
+									<f:setPropertyActionListener value="#{employee}"
+										target="#{employeeBean.selectedCurrentEmployee}" />
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+					</div>
+					<!-- Employee's dialog manage -->
+					<p:dialog id="manage-employee-dialog"
+						header="Descrição do Funcionário" showEffect="fade" modal="true"
+						widgetVar="manageEmployeeDialog" responsive="true">
+
+						<!-- Output panel manage employee content  -->
+						<p:outputPanel id="manage-employee-content" class="ui-fluid">
+							<!-- Scroll panel manage Employee content  -->
+							<p:scrollPanel style="height:70vh;">
+								<p:outputPanel style="padding:15px;"
+									rendered="#{not empty employeeBean.selectedCurrentEmployee}">
+
+									<!-- Massage -->
+									<p:messages showDetail="false" closable="true">
+										<p:autoUpdate />
+									</p:messages>
+
+									<!-- Fields -->
+									<div class="p-formgrid p-grid">
+										<!-- CPF Field -->
+										<div class="p-field p-col-6">
+											<p:outputLabel for="employee_cpf">CPF</p:outputLabel>
+											<p:inputMask id="employee_cpf"
+												value="#{employeeBean.selectedCurrentEmployee.cpf}"
+												mask="999.999.999-99" required="true"
+												requiredMessage="o CPF é um campo obrigatório!"
+												validator="cpfValidator"
+												oninvalid="PF('contet_messages').update" />
+										</div>
+										<!-- RG Field -->
+										<div class="p-field p-col-6">
+											<p:outputLabel for="employee_rg">RG</p:outputLabel>
+											<p:inputMask id="employee_rg"
+												value="#{employeeBean.selectedCurrentEmployee.rg}"
+												mask="999.999.999" required="true"
+												requiredMessage="o RG é um campo obrigatório!" />
+										</div>
+									</div>
+
+									<!-- Name Field -->
+									<div class="p-field">
+										<p:outputLabel for="employee_name">Nome</p:outputLabel>
+										<p:inputText id="employee_name"
+											value="#{employeeBean.selectedCurrentEmployee.name}"
+											required="true"
+											requiredMessage="o nome é um campo obrigatório!" />
+									</div>
+
+									<div class="p-formgrid p-grid">
+
+										<!-- Birth day Field -->
+										<div class="p-field p-col-6">
+											<p:outputLabel for="employee_dtbirth">Data de Nascimento</p:outputLabel>
+											<p:datePicker id="employee_dtbirth"
+												value="#{employeeBean.selectedCurrentEmployee.dtBirth}"
+												required="true"
+												requiredMessage="A data de nascimento é um campo obrigatório!" />
+										</div>
+
+										<!-- IndSex Field -->
+										<div class="p-field p-col-6">
+											<p:outputLabel for="employee_indsex">Sexo</p:outputLabel>
+											<p:selectOneMenu id="employee_indsex"
+												value="#{employeeBean.selectedCurrentEmployee.sex}"
+												required="true"
+												requiredMessage="O sexo é um campo obrigatório!">
+
+												<f:selectItem itemValue="#{null}"
+													itemLabel="Selecione o sexo" />
+												<f:selectItems value="#{indSexEnum.ALL_ENUM_VALUES}"
+													var="sexEnum" itemValue="#{sexEnum}"
+													itemLabel="#{sexEnum.description}" />
+											</p:selectOneMenu>
+										</div>
+									</div>
+
+									<!-- ADDRESS -->
+									<div class="p-field">
+										<h:outputLabel value="Endereço"
+											style="font-weight: bold;font-size: 20px;" />
+									</div>
+
+									<div class="p-formgrid p-grid">
+										<!-- Address Nickname Field -->
+										<div class="p-field p-col-7">
+											<p:outputLabel for="employee_address_nickname">Apelido endereço</p:outputLabel>
+											<p:inputText id="employee_address_nickname"
+												value="#{employeeBean.selectedCurrentEmployee.address.nickname}"
+												required="true"
+												requiredMessage="o apelido é um campo obrigatório!" />
+										</div>
+
+										<!-- Name Logradouro Field -->
+										<div class="p-field p-col-5">
+											<p:outputLabel for="employee_address_cep">CEP</p:outputLabel>
+											<p:inputMask id="employee_address_cep"
+												value="#{employeeBean.selectedCurrentEmployee.address.CEP}"
+												mask="99999-999" required="true"
+												requiredMessage="o CEP é um campo obrigatório!"
+												oninvalid="PF('contet_messages').update" />
+											<!-- validator="cpfValidator" -->
+										</div>
+									</div>
+
+									<div class="p-formgrid p-grid">
+										<!-- Ind Type Logradouro Field -->
+										<div class="p-field p-col-5">
+											<p:outputLabel for="employee_address_typelogradouro">Tipo logradouro</p:outputLabel>
+											<p:selectOneMenu id="employee_address_typelogradouro"
+												value="#{employeeBean.selectedCurrentEmployee.address.typeLogradouro}"
+												required="true"
+												requiredMessage="O Tipo Logradouro é um campo obrigatório!"
+												filter="true" filterMatchMode="startsWith">
+
+												<f:selectItem itemValue="#{null}"
+													itemLabel="Selecione o tipo do logradouro" />
+												<f:selectItems
+													value="#{indTypeLogradouroEnum.ALL_ENUM_VALUES}"
+													var="typeLogradouroEnum" itemValue="#{typeLogradouroEnum}"
+													itemLabel="#{typeLogradouroEnum.description}" />
+											</p:selectOneMenu>
+										</div>
+
+										<!-- Name Logradouro Field -->
+										<div class="p-field p-col-5">
+											<p:outputLabel for="employee_address_namelogradouro">Nome do Logradouro</p:outputLabel>
+											<p:inputText id="employee_address_namelogradouro"
+												value="#{employeeBean.selectedCurrentEmployee.address.nameLogradouro}"
+												required="true"
+												requiredMessage="o nome do logradouro é um campo obrigatório!" />
+										</div>
+
+										<!-- Number Field -->
+										<div class="p-field p-col-2">
+											<p:outputLabel for="employee_address_number">Número</p:outputLabel>
+											<p:inputNumber id="employee_address_number"
+												value="#{employeeBean.selectedCurrentEmployee.address.number}"
+												decimalPlaces="0" minValue="0" maxValue="999"
+												required="true"
+												requiredMessage="o numero é um campo obrigatório!" />
+										</div>
+									</div>
+
+									<div class="p-formgrid p-grid">
+										<!-- Ind UF (States) Field -->
+										<div class="p-field p-col-4">
+											<p:outputLabel for="employee_address_states">Estado/UF</p:outputLabel>
+											<p:selectOneMenu id="employee_address_states"
+												value="#{employeeBean.selectedCurrentEmployee.address.states}"
+												required="true"
+												requiredMessage="O Estado/UF é um campo obrigatório!"
+												filter="true" filterMatchMode="startsWith">
+
+												<f:selectItem itemValue="#{null}"
+													itemLabel="Selecione o Estado/UF" />
+												<f:selectItems value="#{indUFEnum.ALL_ENUM_VALUES}"
+													var="uFEnum" itemValue="#{uFEnum}"
+													itemLabel="#{uFEnum.description}" />
+											</p:selectOneMenu>
+										</div>
+
+										<!-- Name Logradouro Field -->
+										<div class="p-field p-col-4">
+											<p:outputLabel for="employee_address_city">Cidade</p:outputLabel>
+											<p:inputText id="employee_address_city"
+												value="#{employeeBean.selectedCurrentEmployee.address.city}"
+												required="true"
+												requiredMessage="A cidade é um campo obrigatório!" />
+										</div>
+
+										<!-- Number Field -->
+										<div class="p-field p-col-4">
+											<p:outputLabel for="employee_address_district">Bairro/Distrito</p:outputLabel>
+											<p:inputText id="employee_address_district"
+												value="#{employeeBean.selectedCurrentEmployee.address.district}"
+												required="true"
+												requiredMessage="O Bairro/Distrito é um campo obrigatório!" />
+										</div>
+									</div>
+
+									<div class="p-field">
+										<p:outputLabel for="employee_address_complement">Complemento</p:outputLabel>
+										<p:inputTextarea id="employee_address_complement" rows="5"
+											cols="30" counter="display" maxlength="255"
+											counterTemplate="{0} Caracteres disponíveis"
+											autoResize="true"
+											value="#{employeeBean.selectedCurrentEmployee.address.complement}" />
+										<h:outputText id="display" class="p-d-block" />
+									</div>
+
+									<!-- VOCATION -->
+									<div class="p-field">
+										<h:outputLabel value="Vocação"
+											style="font-weight: bold;font-size: 20px;" />
+									</div>
+
+									<div class="p-formgrid p-grid">
+									
+										<!-- Ind Department Field -->
+										<div class="p-field p-col-5">
+											<p:outputLabel for="employee_inddepartment">Departamento</p:outputLabel>
+											<p:selectOneMenu id="employee_inddepartment"
+												value="#{employeeBean.selectedCurrentEmployee.department}"
+												required="true"
+												requiredMessage="O departamento é um campo obrigatório!"
+												filter="true" filterMatchMode="startsWith">
+
+												<f:selectItem itemValue="#{null}"
+													itemLabel="Selecione o departamento" />
+												<f:selectItems
+													value="#{indDepartmentEnum.ALL_ENUM_VALUES}"
+													var="departmentEnum" itemValue="#{departmentEnum}"
+													itemLabel="#{departmentEnum.description}" />
+											</p:selectOneMenu>
+										</div>
+
+										<!-- Name Logradouro Field -->
+										<div class="p-field p-col-7">
+											<p:outputLabel for="employee_nameoccupation">Nome da ocupação</p:outputLabel>
+											<p:inputText id="employee_nameoccupation"
+												value="#{employeeBean.selectedCurrentEmployee.nameOccupation}"
+												required="true"
+												requiredMessage="o nome da ocupação é um campo obrigatório!" />
+										</div>
+									</div>
+								</p:outputPanel>
+							</p:scrollPanel>
+						</p:outputPanel>
+
+						<!-- Footer with crud buttons -->
+						<f:facet name="footer">
+
+							<!-- Save or update button -->
+							<p:commandButton
+								value='#{employeeBean.selectedCurrentEmployee.id eq 0 ? "Salvar" : "Alterar" }'
+								icon="pi pi-check"
+								actionListener="#{employeeBean.saveEmployee()}"
+								update=":form:manage-employee-content :form:manage-employee-dialog"
+								onsuccess=":form:manage-employee-content"
+								process="manage-employee-content @this" />
+
+							<!-- Cancel button -->
+							<p:commandButton value="Cancelar" icon="pi pi-times"
+								onclick="PF('manageEmployeeDialog').hide()"
+								class="ui-button-secondary" />
+						</f:facet>
+					</p:dialog>
+
+					<!-- Confirm dialog to delete or remove selected current employee -->
+					<p:confirmDialog widgetVar="deleteEmployeeDialog" showEffect="fade"
+						width="300" message="Você deseja apagar este Funcionário?"
+						header="Confirmação" severity="warn">
+						<p:commandButton value="Sim" icon="pi pi-check"
+							actionListener="#{employeeBean.deleteEmployee()}" process="@this"
+							oncomplete="PF('deleteEmployeeDialog').hide()" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-button-secondary" icon="pi pi-times"
+							onclick="PF('deleteEmployeeDialog').hide()" />
+					</p:confirmDialog>
+
+					<!-- Confirm dialog to delete all selected Employees -->
+					<p:confirmDialog global="true" showEffect="fade" width="300">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no ui-button-secondary"
+							icon="pi pi-times" />
+					</p:confirmDialog>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

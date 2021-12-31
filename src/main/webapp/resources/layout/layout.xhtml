@@ -1,42 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"    
-    xmlns:p="http://primefaces.org/ui">
-    
-    <ui:insert name="metadata"/>  
-    
-    <h:head>
-    	<ui:insert name="header_config">
-			<ui:include src="../../components/header-config/header-config.xhtml" />
-		</ui:insert>
-		<ui:insert name="header"/>	
-    </h:head>   
-    
-    <h:body  style="background-color: #F7A156;">
-		
-		<div id="principal_layout" class="p-d-flex p-flex-column p-jc-between" style="width: 100%;">
-			<!-- Top -->
-			<div id="top_page" class="p-mb-2">
-				<!-- Navbar or menubar component -->
-				<ui:insert name="menubar">
-					<ui:include src="../../components/menubar/menubar.xhtml" />
-				</ui:insert>
-			</div>
-			<!-- Center -->
-			<div id="center_page" class="p-mb-2">
-				<!-- Content component -->	
-				<ui:insert name="content"/>
-			</div>
-			<!-- Footer -->
-			<div id="footer_page" class="p-mb-2">
-				<!-- footer component -->
-				<ui:insert name="footer">
-					<ui:include src="../../components/footer/footer.xhtml" />
-				</ui:insert>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:insert name="metadata" />
+
+<h:head>
+	<ui:insert name="header_config">
+		<ui:include src="../components/header-config/header-config.xhtml" />
+	</ui:insert>
+	<ui:insert name="header" />
+</h:head>
+
+<h:body>
+	<div id="principal_layout" class="p-grid">
+		<!-- Top -->
+		<div id="top_page" class="p-col-12" style="margin-bottom: 20px">
+			<!-- Navbar or menubar component -->
+			<ui:insert name="menubar">
+				<ui:include src="../components/menubar/menubar.xhtml" />
+			</ui:insert>
+		</div>
+		<!-- Center Page -->
+		<div id="center_page" class="p-col-12" style="margin-bottom: 20px">
+			<div class="p-grid">
+				<!-- Left Page -->
+				<div id="left_page" class="p-col-12 p-md-6 p-lg-2">
+					<!-- Vertical Menu component -->
+					<ui:insert name="vertical-menu">
+						<ui:include src="../components/vertical-menu/vertical-menu.xhtml" />
+					</ui:insert>
+				</div>
+				<!-- Right Page -->
+				<div id="right_page" class="p-col-12 p-md-6 p-lg-10">
+					<!-- Content component -->
+					<ui:insert name="content" />
+				</div>
 			</div>
 		</div>
-    </h:body>
- </html>
+		<!-- Footer -->
+		<div id="footer_page" class="p-col-12">
+			<!-- footer component -->
+			<ui:insert name="footer">
+				<ui:include src="../components/footer/footer.xhtml" />
+			</ui:insert>
+		</div>
+	</div>
+</h:body>
+</html>

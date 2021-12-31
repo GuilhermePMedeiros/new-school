@@ -2,24 +2,26 @@ package br.com.newschool.student.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
+import br.com.newschool.address.Address;
 import br.com.newschool.core.utils.indicators.IndSex;
-import br.com.newschool.people.People;
-import br.com.newschool.utils.indicators.IndDayShifts;
+import br.com.newschool.people.model.People;
 
 /**
  * @author guilherme.pacheco
- * @version 1.0
- * Date: 07/12/2021
+ * @version 2.0
+ * Date: 28/12/2021
  * */
 
+@Entity
 public class Student extends People{
 
-	// Serial ID
+	/**
+	 * Serial ID
+	 */
 	private static final long serialVersionUID = 2333213907462020932L;
 	
-	// Attributes
-	private IndDayShifts shift;
-
 	// Builds
 	public Student() {
 		super();
@@ -49,20 +51,10 @@ public class Student extends People{
 		super(id, cpf, rg, name, dtBirth, sex);
 	}
 	
-	public Student(int id, String cpf, String rg, String name, Date dtBirth, IndSex sex, IndDayShifts shift) {
-		super(id, cpf, rg, name, dtBirth, sex);
-		this.shift = shift;
+	public Student(int id, String cpf, String rg, String name, Date dtBirth, IndSex sex, Address address) {
+		super(id, cpf, rg, name, dtBirth, sex, address);
 	}
 	
-	// Gets and Sets
-	public IndDayShifts getShift() {
-		return shift;
-	}
-
-	public void setShift(IndDayShifts shift) {
-		this.shift = shift;
-	}
-
 	// TODO Edit Method
 	@Override
 	public String toString() {
@@ -72,7 +64,7 @@ public class Student extends People{
 	//Clone Method
 	@Override
 	public Student clone() throws CloneNotSupportedException {
-		return new Student (getId(), getCpf(), getRg(), getName(), getDtBirth(), getSex(), getShift());
+		return new Student (getId(), getCpf(), getRg(), getName(), getDtBirth(), getSex(), getAddress());
 	}
 	
 	// Override of the method toString

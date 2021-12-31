@@ -5,18 +5,113 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui">
-<!-- Header Component -->
-<ui:define name="header">
-	<title>Home</title>
-</ui:define>
+
 <!-- Content Component -->
 <ui:composition template="../resources/layout/layout.xhtml">
+	<!-- Header Component -->
+	<ui:define name="header">
+		<title>Home</title>
+	</ui:define>
+	<!-- Content Component -->
 	<ui:define name="content">
-		
-		<div style="card">
+
+		<div class="p-grid" style="padding: 10px;">
+
+			<div class="p-col-12 p-md-6 p-lg-3">
+				<div style="align: center;">
+					<div class="card"
+						style="width: 100%; background: white; border-radius: 10px;">
+
+						<p:card>
+							<f:facet name="title">
+	        					<i class="pi pi-money-bill" style="font-size: 2rem; margin-right: 10px;"></i>
+	        					<h:outputText value="Valor previsto:" />
+	   						</f:facet>
+
+							<p style="font-size: 40px;">
+								<h:outputText
+									value="0,00 R$" />
+							</p>
+						</p:card>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="p-col-12 p-md-6 p-lg-3">
+				<div style="align: center;">
+					<div class="card"
+						style="width: 100%; background: white; border-radius: 10px;">
+
+						<p:card>
+							<f:facet name="title">
+	        					<i class="pi pi-percentage" style="font-size: 2rem; margin-right: 10px;"></i>
+	        					<h:outputText value="Percentual arrecadado:" />
+	   						</f:facet>
+
+							<p style="font-size: 40px;">
+								<h:outputText
+									value="0,00 R$" />
+							</p>
+						</p:card>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="p-col-12 p-md-6 p-lg-3">
+				<div style="align: center;">
+					<div class="card"
+						style="width: 100%; background: white; border-radius: 10px;">
+
+						<p:card>
+							<f:facet name="title">
+	        					<i class="pi pi-sitemap" style="font-size: 2rem; margin-right: 10px;"></i>
+	        					<h:outputText value="Turmas ativas:" />
+	   						</f:facet>
+
+							<p style="font-size: 40px;">
+								<h:outputText
+									value="0" />
+							</p>
+						</p:card>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="p-col-12 p-md-6 p-lg-3">
+				<div style="align: center;">
+					<div class="card"
+						style="width: 100%; background: white; border-radius: 10px;">
+
+						<p:card>
+							<f:facet name="title">
+	        					<i class="pi pi-id-card" style="font-size: 2rem; margin-right: 10px;"></i>
+	        					<h:outputText value="Alunos matriculados:" />
+	   						</f:facet>
+
+							<p style="font-size: 40px;">
+								<h:outputText
+									value="#{studentBean.studentsList.objectsList.size()}" />
+							</p>
+						</p:card>
+
+					</div>
+				</div>
+			</div>
 			
+			<div class="p-col-12">
+				<div style="align: center; border-radius: 10px;">
+					<p:fieldset legend="Últimas atividades na conta">
+		            	<p class="p-m-0" style="height: 290px">
+		                
+		                </p>
+		        	</p:fieldset>
+        		</div>
+        	</div>
 		</div>
-		
+
 	</ui:define>
 </ui:composition>
 </html>

@@ -1,6 +1,6 @@
 package br.com.newschool.user.model;
 
-import br.com.newschool.core.base.ObjectBase;
+import br.com.newschool.core.base.model.ObjectBase;
 
 public class User extends ObjectBase {
 	

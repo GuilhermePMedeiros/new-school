@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form>
+		<div class="p-grid">
+			<div class="p-col-12" style="padding: 15px;">
+				<p:panelMenu style="width:100%">
+					<!-- Option Student -->
+					<p:submenu label="Alunos">
+						<p:menuitem value="Listar alunos(as)" icon="pi pi-fw pi-users"
+							action="studentCrud" />
+					</p:submenu>
+					<!-- Option Employees -->
+					<p:submenu label="Funcionários">
+						<p:menuitem value="Listar funcionários(as)"
+							icon="pi pi-fw pi-users" action="employeeCrud" />
+					</p:submenu>
+					<!-- Option Class -->
+					<p:submenu label="Turmas">
+						<p:menuitem value="Criar nova turma"
+							icon="pi pi-fw pi-plus-circle" disabled="true" />
+						<p:menuitem value="Listar turmas" icon="pi pi-fw pi-list"
+							disabled="true" />
+					</p:submenu>
+					<!-- Option Class -->
+					<p:submenu label="Relatórios">
+						<p:menuitem value="Financeiros" icon="pi pi-fw pi-wallet"
+							 disabled="true" />
+						<p:menuitem value="Institucionais" icon="pi pi-fw pi-briefcase"
+							disabled="true" />
+						<p:menuitem value="Educacionais" icon="pi pi-fw pi-chart-bar"
+							disabled="true" />					
+					</p:submenu>
+
+				</p:panelMenu>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>
+
+</html>

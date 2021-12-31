@@ -1,0 +1,14 @@
+@charset "ISO-8859-1";
+
+body {
+	background-image: linear-gradient(to bottom right, #9e510e, #f77c11, #f77c11, #592c05);
+}
+
+.ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell
+	{
+	text-align: center;
+}
+
+.customPanelGrid .ui-panelgrid-content {
+	align-items: center;
+}

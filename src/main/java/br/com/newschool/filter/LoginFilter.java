@@ -11,6 +11,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author guilherme.pacheco
+ * @version 1.0
+ * Date: 07/12/2021
+ * */
+
 public class LoginFilter implements Filter {
 
 	@Override

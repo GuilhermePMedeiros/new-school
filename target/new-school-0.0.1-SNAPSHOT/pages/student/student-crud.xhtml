@@ -17,212 +17,276 @@
 	</ui:define>
 	<!-- Content Component -->
 	<ui:define name="content">
-		<div style="align-items: center;">
-			<!-- Import IndSex Enum -->
-			<p:importEnum type="br.com.newschool.core.utils.indicators.IndSex"
-				var="indSexEnum" allSuffix="ALL_ENUM_VALUES" />
+		<div>
 			<!-- Form -->
 			<h:form id="form">
-				<div class="card" style="width: 100%;">
+				<!-- Import Enums -->
+				<!-- Import IndSex Enum -->
+				<p:importEnum type="br.com.newschool.core.utils.indicators.IndSex"
+					var="indSexEnum" allSuffix="ALL_ENUM_VALUES" />
+				<!-- Import IndTypeLogradouro Enum -->			
+				<p:importEnum type="br.com.newschool.core.utils.indicators.IndTypeLogradouro"
+					var="indTypeLogradouroEnum" allSuffix="ALL_ENUM_VALUES" />
+				<!-- Import IndUF Enum -->
+				<p:importEnum type="br.com.newschool.core.utils.indicators.IndUF"
+					var="indUFEnum" allSuffix="ALL_ENUM_VALUES" />
+				<!-- P-Grid -->		
+				<div class="p-grid" style="padding: 10px;">
+					<!-- Growl Massage -->
 					<p:growl id="messages" showDetail="false" />
 					<!-- toolbar -->
-					<p:toolbar style="margin-bottom: 5px;">
-						<!-- toolbar Group to crud buttons-->
-						<p:toolbarGroup>
-							<!-- Button to create new Student -->
-							<p:commandButton value="Novo Aluno" icon="pi pi-plus"
-								actionListener="#{studentBean.openNewStudent()}"
-								update=":form:manage-student-content"
-								oncomplete="PF('manageStudentDialog').show()"
-								styleClass="ui-button-success" style="margin-right: .5rem">
-								<p:resetInput target=":form:manage-student-content" />
-							</p:commandButton>
-							<!-- Button to delete or remove all selected Students -->
-							<p:commandButton id="delete-students-button"
-								value="#{studentBean.deleteButtonMessage}" icon="pi pi-trash"
-								actionListener="#{studentBean.deleteSelectedStudentsList()}"
-								styleClass="ui-button-danger"
-								disabled="#{!studentBean.hasSelectedStudentsList()}"
-								update="@this">
-								<p:confirm header="Confirmação"
-									message="Deseja apagar os alunos selecionados?"
-									icon="pi pi-exclamation-triangle" />
-							</p:commandButton>
-						</p:toolbarGroup>
-						<!-- toolbar Group -->
+					<div class="p-col-12">
+						<p:toolbar style="margin-bottom: 5px;">
+							<!-- toolbar Group to crud buttons-->
+							<p:toolbarGroup>
+								<!-- Button to create new Student -->
+								<p:commandButton value="Novo Aluno" icon="pi pi-plus"
+									actionListener="#{studentBean.openNewStudent()}"
+									update=":form:manage-student-dialog"
+									oncomplete="PF('manageStudentDialog').show()"
+									styleClass="ui-button-success" style="margin-right: .5rem">
+									<p:resetInput target=":form:manage-student-content" />
+								</p:commandButton>
+								<!-- Button to delete or remove all selected Students -->
+								<p:commandButton id="delete-students-button"
+									value="#{studentBean.deleteButtonMessage}" icon="pi pi-trash"
+									actionListener="#{studentBean.deleteSelectedStudentsList()}"
+									styleClass="ui-button-danger"
+									disabled="#{!studentBean.hasSelectedStudentsList()}"
+									update="@this">
+									<p:confirm header="Confirmação"
+										message="Deseja apagar os alunos selecionados?"
+										icon="pi pi-exclamation-triangle" />
+								</p:commandButton>
+							</p:toolbarGroup>
+							<!-- toolbar Group -->
+							<p:toolbarGroup align="right">
+								<!-- Button to export table to pdf -->
+								<p:commandButton value="Export" icon="pi pi-upload"
+									styleClass="ui-button-help" ajax="false">
+									<p:dataExporter type="pdf" target="dt-students"
+										fileName="students" />
+								</p:commandButton>
+							</p:toolbarGroup>
 
-						<p:toolbarGroup align="right">
-							<!--  -->
-							<p:commandButton value="Export" icon="pi pi-upload"
-								styleClass="ui-button-help" ajax="false">
-								<p:dataExporter type="pdf" target="dt-students"
-									fileName="students" />
-							</p:commandButton>
-						</p:toolbarGroup>
+						</p:toolbar>
+					</div>
+					<div class="p-col-12">
+						<!-- Students Data Table -->
+						<p:dataTable id="dt-students" widgetVar="dtStudents" var="student"
+							value="#{studentBean.studentsList.objectsList}" reflow="true"
+							selection="#{studentBean.selectedStudentsList}"
+							rowKey="#{student.id}" paginator="true" rows="10"
+							rowSelectMode="add" paginatorPosition="bottom">
 
-					</p:toolbar>
+							<!-- table header -->
+							<f:facet name="header">
+								<div>
+									<span style="font-weight: bold">Alunos</span> <span
+										class="filter-container ui-input-icon-left"> <i
+										class="pi pi-search"></i> <p:inputText id="globalFilter"
+											onkeyup="PF('dtStudents').filter()" placeholder="Search" />
+									</span>
 
-					<!-- Students Data Table -->
-					<p:dataTable id="dt-students" widgetVar="dtStudents" var="student"
-						value="#{studentBean.studentsList}" reflow="true"
-						selection="#{studentBean.selectedStudentsList}"
-						rowKey="#{student.id}" paginator="true" rows="10"
-						rowSelectMode="add" paginatorPosition="bottom">
+								</div>
+							</f:facet>
 
-						<!-- table header -->
-						<f:facet name="header">
-							<div>
-								<span style="font-weight: bold">Alunos</span> <span
-									class="filter-container ui-input-icon-left"> <i
-									class="pi pi-search"></i> <p:inputText id="globalFilter"
-										onkeyup="PF('dtStudents').filter()" placeholder="Search" />
-								</span>
+							<!-- Events AJAX-->
+							<p:ajax event="rowSelect" update=":form:delete-students-button" />
+							<p:ajax event="rowUnselect" update=":form:delete-students-button" />
+							<p:ajax event="rowSelectCheckbox"
+								update=":form:delete-students-button" />
+							<p:ajax event="rowUnselectCheckbox"
+								update=":form:delete-students-button" />
+							<p:ajax event="toggleSelect"
+								update=":form:delete-students-button" />
 
-							</div>
-						</f:facet>
+							<!-- Columns -->
+							<p:column selectionMode="multiple" exportable="false"></p:column>
+							<!-- Student ID column -->
+							<p:column headerText="ID" sortBy="#{student.id}"
+								filterBy="#{student.id}">
+								<h:outputText value="#{student.id}" />
+							</p:column>
+							<!-- Student name column -->
+							<p:column headerText="Nome" sortBy="#{student.name}"
+								filterBy="#{student.name}">
+								<h:outputText value="#{student.name}" />
+							</p:column>
+							<!-- Student CPF column -->
+							<p:column headerText="CPF" sortBy="#{student.cpf}"
+								filterBy="#{student.cpf}">
+								<h:outputText value="#{student.cpf}" />
+							</p:column>
+							<!-- Student RG column -->
+							<p:column headerText="RG" sortBy="#{student.rg}"
+								filterBy="#{student.rg}">
+								<h:outputText value="#{student.rg}" />
+							</p:column>
 
-						<!-- Events TODO -->
-						<p:ajax event="rowSelect" update=":form:delete-students-button" />
-						<p:ajax event="rowUnselect" update=":form:delete-students-button" />
-						<p:ajax event="rowSelectCheckbox"
-							update=":form:delete-students-button" />
-						<p:ajax event="rowUnselectCheckbox"
-							update=":form:delete-students-button" />
-						<p:ajax event="toggleSelect" update=":form:delete-students-button" />
+							<!-- Student Birth Day column -->
+							<p:column headerText="Data Nascimento"
+								sortBy="#{student.formatedDtBirth}"
+								filterBy="#{student.formatedDtBirth}">
+								<h:outputText value="#{student.formatedDtBirth}" />
+							</p:column>
 
-						<!-- Columns -->
-						<p:column selectionMode="multiple" exportable="false"></p:column>
-						<!-- Student ID column -->
-						<p:column headerText="ID" sortBy="#{student.id}"
-							filterBy="#{student.id}">
-							<h:outputText value="#{student.id}" />
-						</p:column>
-						<!-- Student name column -->
-						<p:column headerText="Nome" sortBy="#{student.name}"
-							filterBy="#{student.name}">
-							<h:outputText value="#{student.name}" />
-						</p:column>
-						<!-- Student CPF column -->
-						<p:column headerText="CPF" sortBy="#{student.cpf}"
-							filterBy="#{student.cpf}">
-							<h:outputText value="#{student.cpf}" />
-						</p:column>
-						<!-- Student RG column -->
-						<p:column headerText="RG" sortBy="#{student.rg}"
-							filterBy="#{student.rg}">
-							<h:outputText value="#{student.rg}" />
-						</p:column>
+							<!-- Student Sex column -->
+							<p:column headerText="Sexo" sortBy="#{student.sex.description}"
+								filterBy="#{student.sex.description}">
+								<h:outputText value="#{student.sex.description}" />
+							</p:column>
 
-						<!-- Student Birth Day column -->
-						<p:column headerText="Data Nascimento"
-							sortBy="#{student.dtBirth.year}"
-							filterBy="#{student.dtBirth.year}">
-							<h:outputText value="#{student.dtBirth}" />
-						</p:column>
+							<!-- buttons crud column -->
+							<p:column exportable="false">
+								<!-- Edit button -->
+								<p:commandButton icon="pi pi-pencil"
+									update=":form:manage-student-content"
+									oncomplete="PF('manageStudentDialog').show()"
+									styleClass="edit-button rounded-button ui-button-success"
+									process="@this">
+									<f:setPropertyActionListener value="#{student}"
+										target="#{studentBean.selectedCurrentStudent}" />
+									<p:resetInput target=":form:manage-student-content" />
+								</p:commandButton>
+								<!-- remove button -->
+								<p:commandButton class="ui-button-warning rounded-button"
+									icon="pi pi-trash" process="@this"
+									oncomplete="PF('deleteStudentDialog').show()">
+									<f:setPropertyActionListener value="#{student}"
+										target="#{studentBean.selectedCurrentStudent}" />
+								</p:commandButton>
+							</p:column>
 
-						<!-- Student Sex column -->
-						<p:column headerText="Sexo" sortBy="#{student.sex.description}"
-							filterBy="#{student.sex.description}">
-							<h:outputText value="#{student.sex.description}" />
-						</p:column>
-
-						<!-- buttons crud column -->
-						<p:column exportable="false">
-							<!-- Edit button -->
-							<p:commandButton icon="pi pi-pencil"
-								update=":form:manage-student-content"
-								oncomplete="PF('manageStudentDialog').show()"
-								styleClass="edit-button rounded-button ui-button-success"
-								process="@this">
-								<f:setPropertyActionListener value="#{student}"
-									target="#{studentBean.selectedCurrentStudent}" />
-								<p:resetInput target=":form:manage-student-content" />
-							</p:commandButton>
-							<!-- remove button -->
-							<p:commandButton class="ui-button-warning rounded-button"
-								icon="pi pi-trash" process="@this"
-								oncomplete="PF('deleteStudentDialog').show()">
-								<f:setPropertyActionListener value="#{student}"
-									target="#{studentBean.selectedCurrentStudent}" />
-							</p:commandButton>
-						</p:column>
-
-					</p:dataTable>
-
-					<!-- TODO -->
-					<p:dialog id="manageStudentDialog" header="Descrição do Aluno"
+						</p:dataTable>
+					</div>
+					<!-- Student's dialog manage -->
+					<p:dialog id="manage-student-dialog" header="Descrição do Aluno"
 						showEffect="fade" modal="true" widgetVar="manageStudentDialog"
 						responsive="true">
 
 						<!-- Output panel manage student content  -->
 						<p:outputPanel id="manage-student-content" class="ui-fluid">
 
-							<!--  -->
 							<p:outputPanel
 								rendered="#{not empty studentBean.selectedCurrentStudent}">
 
-								<!--  -->
+								<!-- Massage -->
+								<p:messages showDetail="false" closable="true">
+									<p:autoUpdate />
+								</p:messages>
+
+								<!-- Fields -->
 								<div class="p-formgrid p-grid">
-									<!--  -->
-									<div class="p-field p-col">
+									<!-- CPF Field -->
+									<div class="p-field p-col-6">
 										<p:outputLabel for="student_cpf">CPF</p:outputLabel>
 										<p:inputMask id="student_cpf"
 											value="#{studentBean.selectedCurrentStudent.cpf}"
-											mask="999.999.999-99" required="true" />
+											mask="999.999.999-99" required="true"
+											requiredMessage="o CPF é um campo obrigatório!"
+											validator="cpfValidator"
+											oninvalid="PF('contet_messages').update" />
 									</div>
-									<!--  -->
-									<div class="p-field p-col">
+									<!-- RG Field -->
+									<div class="p-field p-col-6">
 										<p:outputLabel for="student_rg">RG</p:outputLabel>
 										<p:inputMask id="student_rg"
 											value="#{studentBean.selectedCurrentStudent.rg}"
-											mask="999.999.999" required="true" />
+											mask="999.999.999" required="true"
+											requiredMessage="o RG é um campo obrigatório!" />
 									</div>
 								</div>
 
-								<!--  -->
+								<!-- Name Field -->
 								<div class="p-field">
 									<p:outputLabel for="student_name">Nome</p:outputLabel>
 									<p:inputText id="student_name"
 										value="#{studentBean.selectedCurrentStudent.name}"
-										required="true" />
+										required="true"
+										requiredMessage="o nome é um campo obrigatório!" />
 								</div>
 
-								<!--  -->
 								<div class="p-formgrid p-grid">
 
-									<!-- birth day -->
-									<div class="p-field p-col">
+									<!-- Birth day Field -->
+									<div class="p-field p-col-6">
 										<p:outputLabel for="student_dtbirth">Data de Nascimento</p:outputLabel>
 										<p:datePicker id="student_dtbirth"
-											value="#{studentBean.selectedCurrentStudent.dtBirth}" />
+											value="#{studentBean.selectedCurrentStudent.dtBirth}"
+											required="true"
+											requiredMessage="A data de nascimento é um campo obrigatório!" />
 									</div>
 
-									<!--  -->
-									<div class="p-field p-col">
+									<!-- IndSex Field -->
+									<div class="p-field p-col-6">
 										<p:outputLabel for="student_indsex">Sexo</p:outputLabel>
-										<p:selectOneMenu id="student_indsex">
-											<f:selectItem itemLabel="Selecione o sexo" />
-											<ui:repeat value="#{indSexEnum.ALL_ENUM_VALUES}"
-												var="sexEnum">
-												<f:selectItem itemLabel="#{sexEnum.description}"
-													itemValue="#{sexEnum}" />
-											</ui:repeat>
+										<p:selectOneMenu id="student_indsex"
+											value="#{studentBean.selectedCurrentStudent.sex}"
+											required="true"
+											requiredMessage="O sexo é um campo obrigatório!">
+
+											<f:selectItem itemValue="#{null}"
+												itemLabel="Selecione o sexo" />
+											<f:selectItems value="#{indSexEnum.ALL_ENUM_VALUES}"
+												var="SexEnum" itemValue="#{SexEnum}"
+												itemLabel="#{SexEnum.description}" />
 										</p:selectOneMenu>
 									</div>
 								</div>
 
+								<!-- ADDRESS -->
+
+								<!-- Address Nickname Field -->
+								<div class="p-field">
+									<p:outputLabel for="student_address_nickname">Apelido endereço</p:outputLabel>
+									<p:inputText id="student_address_nickname"
+										value="#{studentBean.selectedCurrentStudent.address.nickname}"
+										required="true"
+										requiredMessage="o apelido é um campo obrigatório!" />
+								</div>
+
+								<div class="p-formgrid p-grid">
+
+									<!-- IndSex Field -->
+									<div class="p-field p-col-4">
+										<p:outputLabel for="student_address_typelogradouro">Tipo logradouro</p:outputLabel>
+										<p:selectOneMenu id="student_address_typelogradouro"
+											value="#{studentBean.selectedCurrentStudent.address.typeLogradouro}"
+											required="true"
+											requiredMessage="O Tipo Logradouro é um campo obrigatório!">
+
+											<f:selectItem itemValue="#{null}"
+												itemLabel="Selecione o tipo do logradouro" />
+											<f:selectItems value="#{indTypeLogradouroEnum.ALL_ENUM_VALUES}"
+												var="typeLogradouroEnum" itemValue="#{typeLogradouroEnum}"
+												itemLabel="#{typeLogradouroEnum.description}" />
+										</p:selectOneMenu>
+									</div>
+									
+									<!-- Birth day Field -->
+									<div class="p-field p-col-8">
+										<p:outputLabel for="student_address_namelogradouro">Apelido endereço</p:outputLabel>
+										<p:inputText id="student_address_namelogradouro"
+											value="#{studentBean.selectedCurrentStudent.address.nameLogradouro}"
+											required="true"
+											requiredMessage="o nome do logradouro é um campo obrigatório!" />
+									</div>
+								</div>
+
 							</p:outputPanel>
+
 						</p:outputPanel>
 
 						<!-- Footer with crud buttons -->
 						<f:facet name="footer">
 
 							<!-- Save or update button -->
-							<!-- TODO Alterar actionL-->
 							<p:commandButton
-								value='#{studentBean.selectedCurrentStudent.id == 0 ? "Salvar" : "Alterar" }'
+								value='#{studentBean.selectedCurrentStudent.id eq 0 ? "Salvar" : "Alterar" }'
 								icon="pi pi-check" actionListener="#{studentBean.saveStudent()}"
-								update="manage-student-content"
+								update=":form:manage-student-content :form:manage-student-dialog"
+								onsuccess=":form:manage-student-content"
 								process="manage-student-content @this" />
 
 							<!-- Cancel button -->

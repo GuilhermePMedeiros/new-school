@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form>
+		<div>
+			<p:growl id="messages" />
+			<div class="p-grid">
+				<div class="p-col-12">
+					<p:menubar autoDisplay="true">
+						<!-- Option Home -->
+						<p:menuitem value="Tela inicial" icon="pi pi-fw pi-home" action="home" />
+						<!-- Option Config -->
+						<p:submenu label="Configurações" icon="pi pi-fw pi-th-large">
+							<p:submenu label="Linguagens" icon="pi pi-fw pi-book">
+								<p:menuitem value="English"
+									icon="pi pi-fw pi-flag" disabled="true" />
+								<p:menuitem value="Português"
+									icon="pi pi-fw pi-flag" disabled="true" />
+							</p:submenu>
+						</p:submenu>
+						<!-- Option Logout -->
+						<p:menuitem value="Encerrar sessão" icon="pi pi-fw pi-sign-out" action="#{loginBean.logout()}" />
+					</p:menubar>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>
+
+</html>

@@ -7,12 +7,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import br.com.newschool.core.utils.view.communication.initparameter.InitParameterHelper;
 import br.com.newschool.user.model.User;
 
 @ManagedBean
 @SessionScoped
 public class LoginBean implements Serializable {
-	
+
 	// Serial Id
 	private static final long serialVersionUID = -5331751306145829727L;
 
@@ -21,7 +22,7 @@ public class LoginBean implements Serializable {
 	private String password;
 	private User user;
 
-	//Get and set
+	// Get and set
 	public User getUser() {
 		return user;
 	}
@@ -45,7 +46,12 @@ public class LoginBean implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
+	// Return Image Logo Path
+	public String getImageLogo() {
+		return InitParameterHelper.getInitParameterHelper("logo.location");
+	}
+
 	// Login Method TODO
 	public String login() {
 		//
@@ -55,17 +61,16 @@ public class LoginBean implements Serializable {
 		}
 		//
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, 
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "login e/ou senha invalidos", ""));
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "login e/ou senha invalidos", ""));
 		//
 		return null;
 	}
 
-	// Logout Method 
+	// Logout Method
 	public String logout() {
 		// Delete session object
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		return "login";
 	}
-	
+
 }

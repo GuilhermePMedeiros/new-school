@@ -3,7 +3,7 @@ package br.com.newschool.student.studentslist;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.newschool.core.base.ObjectsListBase;
+import br.com.newschool.core.base.list.ObjectsListBase;
 import br.com.newschool.student.model.Student;
 
 /**
@@ -50,7 +50,7 @@ public class StudentsList extends ObjectsListBase<Student> {
 	// Overrides Methods
 	@Override
 	public void addObject(Student student) {
-		student.setId(getObjectsList().size() + 1);
+		//student.setId(getObjectsList().size() + 1);
 		getObjectsList().add(student);
 	}
 

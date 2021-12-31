@@ -4,28 +4,29 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
 
-import br.com.newschool.core.utils.cpf.CPFValidation;
+import br.com.newschool.address.Address;
+import br.com.newschool.core.utils.view.message.MessageHelper;
 import br.com.newschool.student.model.Student;
 import br.com.newschool.student.service.StudentService;
 import br.com.newschool.student.studentslist.StudentsList;
 
 /**
  * @author guilherme.pacheco
- * @version 2.0 Date: 20/12/2021
+ * @version 3.0 Date: 20/12/2021
  */
 
 @ManagedBean
 @ViewScoped
 public class StudentBean implements Serializable {
 
-	// Serial id
+	/**
+	 * Serial ID
+	 */
 	private static final long serialVersionUID = -3350955653156395340L;
 
 	// Attributes
@@ -79,6 +80,7 @@ public class StudentBean implements Serializable {
 	// Method to create new Student object
 	public void openNewStudent() {
 		this.selectedCurrentStudent = new Student();
+		selectedCurrentStudent.setAddress(new Address());
 	}
 
 	// Method to save or edit Student
@@ -86,29 +88,15 @@ public class StudentBean implements Serializable {
 
 		// If id equals 0 it's the new Student, but id > 0 it's exist student
 		if (this.selectedCurrentStudent.getId() == 0) {
-			// Is valid CPF ?
-			if (CPFValidation.isCPF(selectedCurrentStudent.getCpf())) {
-				this.studentsList.addObject(this.selectedCurrentStudent);
-				this.service.addObject(this.selectedCurrentStudent);
-				// Setting message to success add.
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno adicionado com sucesso!"));
-				// ...
-			} else {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "CPF inválido!", "Por favor, tente novamente!"));
-			}
+			this.studentsList.addObject(this.selectedCurrentStudent);
+			this.service.addObject(this.selectedCurrentStudent);
+			// Setting message to success add.
+			MessageHelper.addInfoMessage("Aluno adicionado com sucesso!");
 		} else {
-			// Is valid CPF ?
-			if (CPFValidation.isCPF(selectedCurrentStudent.getCpf())) {
-				this.studentsList.UpdateObjectById(selectedCurrentStudent.getId(), selectedCurrentStudent);
-				this.service.UpdateObjectById(selectedCurrentStudent.getId(), selectedCurrentStudent);
-				// Setting message to success edit.
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno alterado com sucesso!"));
-				// ...
-			} else {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "CPF inválido!", "Por favor, tente novamente!"));
-			}
+			this.studentsList.UpdateObjectById(selectedCurrentStudent.getId(), selectedCurrentStudent);
+			this.service.UpdateObjectById(selectedCurrentStudent.getId(), selectedCurrentStudent);
+			// Setting message to success edit.
+			MessageHelper.addInfoMessage("Aluno alterado com sucesso!");
 		}
 		//
 		this.selectedCurrentStudent = null;
@@ -125,7 +113,8 @@ public class StudentBean implements Serializable {
 		// Setting Current Student to null
 		this.selectedCurrentStudent = null;
 		// Setting message to success remove student
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(" aluno removido com sucesso!"));
+		MessageHelper.addInfoMessage("Aluno removido com sucesso!");
+		// Updating form
 		PrimeFaces.current().ajax().update("form:messages", "form:dt-students");
 	}
 
@@ -140,11 +129,13 @@ public class StudentBean implements Serializable {
 		this.studentsList.removeAllObjectsById(selectedStudentsList);
 		this.service.removeAllObjectsById(selectedStudentsList);
 		// Setting message to success remove students
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(
-						selectedStudentsList.size() > 1 ? selectedStudentsList.size() + " alunos removidos com sucesso!"
-								: selectedStudentsList.size() + " aluno removido com sucesso!"));
+		String summary = selectedStudentsList.size() > 1
+				? selectedStudentsList.size() + " alunos removidos com sucesso!"
+				: selectedStudentsList.size() + " aluno removido com sucesso!";
+		MessageHelper.addInfoMessage(summary);
+		// Setting selected Students list to null
 		this.selectedStudentsList = null;
+		// Updating form
 		PrimeFaces.current().ajax().update("form:messages", "form:dt-students");
 		PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
 	}

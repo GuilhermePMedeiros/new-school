@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<!-- Content Component -->
+<ui:composition template="../../resources/layout/layout.xhtml">
+	<!-- Header Component -->
+	<ui:define name="header">
+		<title>Relatório financeiro</title>
+	</ui:define>
+	<!-- Content Component -->
+	<ui:define name="content">
+
+		<div class="p-grid" style="padding: 10px;">
+
+			<div class="p-col-12 p-md-6 p-lg-6">
+				<div style="align: center;">
+					<div class="card"
+						style="width: 100%; background: white; border-radius: 10px;">
+
+						<p:card>
+							<f:facet name="title">
+								<i class="pi pi-money-bill"
+									style="font-size: 2rem; margin-right: 10px;"></i>
+								<h:outputText value="Valor previsto:" />
+							</f:facet>
+
+							<p style="font-size: 40px;">
+								<h:outputText value="0,00 R$" />
+							</p>
+						</p:card>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="p-col-12 p-md-6 p-lg-6">
+				<div style="align: center;">
+					<div class="card"
+						style="width: 100%; background: white; border-radius: 10px;">
+
+						<p:card>
+							<f:facet name="title">
+								<i class="pi pi-percentage"
+									style="font-size: 2rem; margin-right: 10px;"></i>
+								<h:outputText value="Percentual arrecadado:" />
+							</f:facet>
+
+							<p style="font-size: 40px;">
+								<h:outputText value="0,00 R$" />
+							</p>
+						</p:card>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="p-col-12 p-md-6 p-lg-6">
+				<div style="align: center;">
+					<div class="card"
+						style="width: 100%; background: white; border-radius: 10px;">
+
+						<p:card>
+							<f:facet name="title">
+								<i class="pi pi-sort-amount-down-alt"
+									style="font-size: 2rem; margin-right: 10px;"></i>
+								<h:outputText value="Previsão de despesas:" />
+							</f:facet>
+
+							<p style="font-size: 40px;">
+								<h:outputText value="0,00 R$" />
+							</p>
+						</p:card>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="p-col-12 p-md-6 p-lg-6">
+				<div style="align: center;">
+					<div class="card"
+						style="width: 100%; background: white; border-radius: 10px;">
+
+						<p:card>
+							<f:facet name="title">
+								<i class="pi pi-sort-amount-up-alt"
+									style="font-size: 2rem; margin-right: 10px;"></i>
+								<h:outputText value="Previsão de lucro:" />
+							</f:facet>
+
+							<p style="font-size: 40px;">
+								<h:outputText value="0,00 R$" />
+							</p>
+						</p:card>
+
+					</div>
+				</div>
+			</div>
+<!--  
+			<div class="p-col-12 p-md-6 p-lg-12 p-xl-4">
+				<div class="card">
+					<p:donutChart model="" style="width: 100%; height: 500px;" />
+				</div>
+			</div>
+-->
+
+		</div>
+
+	</ui:define>
+</ui:composition>
+</html>
