@@ -1,4 +1,4 @@
-# :computer:	Projeto New School();  :brazil: - BETA
+# Projeto New School();  :brazil: - BETA
 
 - Sistema para escolas com JSF, Prime Faces, Hibernate outras tecnologias.
 
@@ -10,10 +10,10 @@
 - PrimeFaces
 - etc
 
-## Funcionalidades disponÌveis:
+## Funcionalidades dispon√≠veis:
 
 - Crud de Aluno
-- Crud de Funcion·rios
+- Crud de Funcion√°rios
 
 <div style="display: inline_block"><br>
    <img align="center" alt="Java-icon" height="40" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original-wordmark.svg">
